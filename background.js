@@ -1,10 +1,27 @@
-_running = false;
-
 chrome.browserAction.onClicked.addListener(function(tab) {
-	if(_running == false){
-		chrome.tabs.sendMessage(tab.id, "add");
-		chrome.browserAction.setIcon({path:"icon/on.png"});
-		_running = true;
-	}
-	console.log('already on');
+	chrome.tabs.sendMessage(tab.id, "add", null, function(response){
+		changeIcon(response.running);
+	});
 });
+
+chrome.tabs.onUpdated.addListener(function(tabId, selectInfo){
+	chrome.tabs.sendMessage(tabId, "status", null, function(response){
+		changeIcon(response.running);
+	});
+})
+
+
+chrome.tabs.onActiveChanged.addListener(function(tabId, selectInfo){
+	chrome.tabs.sendMessage(tabId, "status", null, function(response){
+		changeIcon(response.running);
+	});
+})
+
+
+function changeIcon(running){
+	if(running){
+		chrome.browserAction.setIcon({path:"icon/on.png"});
+	}else{
+		chrome.browserAction.setIcon({path:"icon/off.png"});
+	}
+}
