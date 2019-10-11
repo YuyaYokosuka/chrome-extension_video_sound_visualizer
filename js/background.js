@@ -10,13 +10,11 @@ chrome.tabs.onUpdated.addListener(function(tabId, selectInfo){
 	});
 })
 
-
 chrome.tabs.onActiveChanged.addListener(function(tabId, selectInfo){
 	chrome.tabs.sendMessage(tabId, "status", null, function(response){
 		changeIcon(response.running);
 	});
 })
-
 
 function changeIcon(running){
 	if(running){

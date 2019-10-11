@@ -6,7 +6,9 @@ class SoundSpectrum{
 	bufferLength;
 	dataArray;
 
-	constructor(videoElement){
+	alpha;
+
+	constructor(videoElement, alpha){
 		this.videoElement = videoElement;
 
 		this.canvas = this.createCanvas(this.videoElement);
@@ -26,6 +28,8 @@ class SoundSpectrum{
 		// connext audio node
 		let audioSourceNode = audioCtx.createMediaElementSource(this.videoElement);
 		audioSourceNode.connect(this.analyserNode);
+
+		this.alpha = alpha || 0.3
 	}
 
 	createCanvas(videoElement){
@@ -43,7 +47,7 @@ class SoundSpectrum{
 		this.canvas.width = this.videoElement.offsetWidth;
 		this.canvas.height = this.videoElement.offsetHeight;
 
-		this.canvasCtx.globalAlpha = 0.3;
+		this.canvasCtx.globalAlpha = this.alpha;
 		//this.canvasCtx.fillStyle = 'black';
 		//this.canvasCtx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 

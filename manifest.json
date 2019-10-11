@@ -15,15 +15,20 @@
 	},
 	"content_scripts": [{
 		"matches": ["<all_urls>"],
-		"js": ["script.js", "lib/sound_spectrum.js"]
+		"js": ["js/script.js", "js/sound_spectrum.js"]
 	}],
 	"background": {
-		"scripts": ["background.js"]
+		"scripts": ["js/background.js"]
 	},
+	"options_ui": {
+    "page": "html/options.html",
+    "open_in_tab": false
+  },
 
 	"permissions": [
 		"tabs",
 		"background",
+		"storage",
 		"http://*/*",
 		"https://*/*"
 	]

@@ -17,12 +17,20 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
 function addVisualizer() {
 	if(running == false){
-		for (let videoElement of videoElements()){
-			soundSpectrums.push(new SoundSpectrum(videoElement));
-		}
-		refleshFrames();
-		running = true;
-		console.log('start video audio visualiser');
+		chrome.storage.local.get({
+			alpha: 0.3,
+			forceMuteOff: false
+		}, function(items) {
+			console.log(items);
+			for (let videoElement of videoElements()){
+				if(items.forceMuteOff)forceMuteOff(videoElement);
+				soundSpectrums.push(new SoundSpectrum(videoElement, items.alpha));
+			}
+			refleshFrames();
+			running = true;
+			console.log('start video audio visualiser');
+		})
+
 	}else{
 		console.log('already on');
 	}
@@ -31,6 +39,10 @@ function addVisualizer() {
 
 function videoElements(){
 	return document.getElementsByTagName("video");
+}
+
+function forceMuteOff(videoElement){
+	videoElement.muted = false;
 }
 
 function refleshFrames(){
