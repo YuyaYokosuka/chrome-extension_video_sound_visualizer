@@ -1,18 +1,18 @@
 chrome.browserAction.onClicked.addListener(function(tab) {
 	chrome.tabs.sendMessage(tab.id, "add", null, function(response){
-		changeIcon(response.running);
+		if(response && 'running' in response) changeIcon(response.running);
 	});
 });
 
 chrome.tabs.onUpdated.addListener(function(tabId, selectInfo){
 	chrome.tabs.sendMessage(tabId, "status", null, function(response){
-		changeIcon(response.running);
+		if(response && 'running' in response) changeIcon(response.running);
 	});
 })
 
 chrome.tabs.onActiveChanged.addListener(function(tabId, selectInfo){
 	chrome.tabs.sendMessage(tabId, "status", null, function(response){
-		changeIcon(response.running);
+		if(response && 'running' in response) changeIcon(response.running);
 	});
 })
 

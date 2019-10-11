@@ -9,8 +9,6 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 			break;
 		case "status":
 			sendResponse({running: running});
-		default:
-			console.log("undefined request " + request);
 	}
 
 });
@@ -21,7 +19,6 @@ function addVisualizer() {
 			alpha: 0.3,
 			forceMuteOff: false
 		}, function(items) {
-			console.log(items);
 			for (let videoElement of videoElements()){
 				if(items.forceMuteOff)forceMuteOff(videoElement);
 				soundSpectrums.push(new SoundSpectrum(videoElement, items.alpha));
